@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 import { UserRegistration } from '@/types/user';
 import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 
 const Registration = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    console.log(isLoading);
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -26,9 +27,8 @@ const Registration = () => {
             role: "user"
         };
 
-         console.log(data);
 
-        const res = await fetch('http://localhost:5000/registrationRoute', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registrationRoute`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -47,6 +47,7 @@ const Registration = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
+            router.push("/login");
             setIsLoading(false);
 
         } else {

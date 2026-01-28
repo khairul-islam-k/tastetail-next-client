@@ -13,11 +13,11 @@ const authLayout = ({ children }: { children: React.ReactNode }) => {
                 {/* Image */}
                 <div className="hidden md:flex items-center justify-center">
                     <Image
-                        src="/Delivery.png"
+                        src="/cook.png"
                         alt="Parcel Delivery"
                         width={500}
                         height={500}
-                        className="object-contain"
+                        className="object-contain rounded-2xl"
                         priority
                     />
                 </div>

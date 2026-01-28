@@ -4,7 +4,7 @@ import type { NextAuthOptions } from "next-auth";
 
 
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET as string,
   providers: [
     CredentialsProvider({
@@ -18,17 +18,23 @@ const authOptions: NextAuthOptions = {
     async authorize(credentials, req) {
 
         
-      const res = await fetch("http://localhost:5000/loginPoint", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/loginPoint`, {
         method: 'POST',
         body: JSON.stringify(credentials),
         headers: { "Content-Type": "application/json" }
       })
 
-      const user = await res.json()
+      const user = await res.json();
 
       // If no error and we have user data, return it
       if (res.ok && user) {
-        return user
+        return {
+            id : user?._id,
+            name: user?.name,
+            email: user?.email,
+            image: user?.image,
+            role: user?.role
+          }
       }
       // Return null if user data could not be retrieved
       return null
