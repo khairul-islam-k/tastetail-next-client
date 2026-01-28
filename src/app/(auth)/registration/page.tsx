@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
-// import registrationApi from './components/registrationApi';
 import { UserRegistration } from '@/types/user';
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 
 const Registration = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    console.log(isLoading);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -24,33 +24,42 @@ const Registration = () => {
             image: formData.get("image") as string,
             password: formData.get("password") as string,
             role: "user"
-        }; 
+        };
 
-        // const result = JSON.parse(await registrationApi(data));
-        console.log(data);
+         console.log(data);
 
-        // if (result?.insertedId) {
-        //     form.reset();
-        //     Swal.fire({
-        //         position: "top-end",
-        //         icon: "success",
-        //         title: "Your work has been saved",
-        //         showConfirmButton: false,
-        //         timer: 1500
-        //     });
-        //     setIsLoading(false);
+        const res = await fetch('http://localhost:5000/registrationRoute', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        });
+        const result = await res.json();
+        console.log("response",result);
 
-        // } else {
-        //     Swal.fire({
-        //         icon: "error",
-        //         title: "Oops...",
-        //         text: "Already have an account!",
-        //         footer: '<a href="#">Why do I have this issue?</a>'
-        //     });
+        if (result?.insertedId) {
+            form.reset();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            setIsLoading(false);
 
-        //     setIsLoading(false);
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Already have an account!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
 
-        // }
+            setIsLoading(false);
+
+        }
     }
 
     return (

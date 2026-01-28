@@ -2,8 +2,8 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import React from 'react';
-// import { signIn } from 'next-auth/react';
-// import Swal from 'sweetalert2';
+import { signIn } from 'next-auth/react';
+import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 
 const Login = () => {
@@ -16,27 +16,28 @@ const Login = () => {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         console.log(data);
-        // const name = e.currentTarget.fullName.value;
-        // const result = await signIn("credentials", { email: data.email, password: data.password, redirect: false })
+        const result = await signIn("credentials", { email: data.email, password: data.password, redirect: false });
 
-        // if (result?.ok) {
-        //     form.reset();
-        //     Swal.fire({
-        //         position: "top-end",
-        //         icon: "success",
-        //         title: "Signin Successfully",
-        //         showConfirmButton: false,
-        //         timer: 1500
-        //     });
-        //     router.push("/");
-        // } else {
-        //     Swal.fire({
-        //         icon: "error",
-        //         title: "Oops...",
-        //         text: "Email or Password is wrong",
-        //         footer: '<a href="#">Why do I have this issue?</a>'
-        //     });
-        // }
+        console.log(result);
+
+        if (result?.ok) {
+            form.reset();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Signin Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            router.push("/");
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Email or Password is wrong",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+        }
     }
 
     return (
