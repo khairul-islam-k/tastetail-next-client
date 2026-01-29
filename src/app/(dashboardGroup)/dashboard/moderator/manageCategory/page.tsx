@@ -1,6 +1,8 @@
 "use client";
 import { Pencil, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 interface TCategories {
     _id: string;
@@ -8,6 +10,7 @@ interface TCategories {
 }
 
 const ManageCategory = () => {
+
     const [categories, SetCategories] = useState<TCategories[]>([]);
     console.log(categories);
 
@@ -17,7 +20,34 @@ const ManageCategory = () => {
 
     const handleDelete = (id: string) => {
         console.log("Delete:", id);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.NEXT_PUBLIC_API_URL}/category/${id}`, {
+                    method: 'DELETE',
+                }).then(res => res.json())
+                    .then(data => {
+                        const remainCategory = categories.filter(singleData => singleData._id !== id);
+                        SetCategories(remainCategory);
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+
+                    })
+            }
+        });
+
     };
+
     useEffect(() => {
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/category`)
             .then((response) => response.json())
@@ -42,13 +72,15 @@ const ManageCategory = () => {
                             <td className="p-3 font-medium">{item.category}</td>
 
                             <td className="p-3 text-right space-x-2">
-                                <button
-                                    onClick={() => handleEdit(item._id)}
-                                    className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
-                                >
-                                    <Pencil size={14} />
-                                    Edit
-                                </button>
+                                <Link href={`/dashboard/moderator/editCategory/${item._id}`}>
+                                    <button
+                                        onClick={() => handleEdit(item._id)}
+                                        className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    >
+                                        <Pencil size={14} />
+                                        Edit
+                                    </button>
+                                </Link>
 
                                 <button
                                     onClick={() => handleDelete(item._id)}
