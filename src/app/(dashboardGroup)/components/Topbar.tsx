@@ -28,7 +28,7 @@ export default function Topbar({ toggle }: TSidebarProps) {
             session.data ? <div className="flex gap-4 items-center">
 
             <div>
-              <h3 className="font-semibold">Asif Riaj</h3>
+              <h3 className="font-semibold border w-24 truncate">{session.data?.user?.name}</h3>
               <p className="text-end text-sm">HR</p>
             </div>
 
@@ -36,8 +36,8 @@ export default function Topbar({ toggle }: TSidebarProps) {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Avatar>
-                    <AvatarImage src="/mel-user.png" alt="shadcn" />
-                    <AvatarFallback>LR</AvatarFallback>
+                    <AvatarImage src={session.data?.user?.image} alt="shadcn" />
+                    <AvatarFallback>{session.data?.user?.name.slice(0, 2)}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
@@ -61,8 +61,8 @@ export default function Topbar({ toggle }: TSidebarProps) {
           >log In</Button></Link>
           }
 
-        {/* <Image src="/github-logo.jpeg" width={30} height={30} alt="profile" 
-        className='rounded-full' /> */}
+
+        
         <button onClick={toggle}>
           <Menu size={24} />
         </button>

@@ -55,7 +55,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             session.data ? <div className="flex gap-4 items-center">
 
             <div>
-              <h3 className="font-semibold">Asif Riaj</h3>
+              <h3 className="font-semibold w-24 truncate">{session.data?.user?.name}</h3>
               <p className="text-end text-sm">HR</p>
             </div>
 
@@ -63,8 +63,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Avatar>
-                    <AvatarImage src="/mel-user.png" alt="shadcn" />
-                    <AvatarFallback>LR</AvatarFallback>
+                    <AvatarImage src={session.data?.user?.image} alt="shadcn" />
+                    <AvatarFallback>{session.data?.user?.name.slice(0, 2)}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
