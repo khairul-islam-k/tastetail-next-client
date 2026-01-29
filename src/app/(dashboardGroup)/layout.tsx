@@ -6,17 +6,17 @@ import { Bell } from "lucide-react";
 import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
 import {
-  BadgeCheckIcon,
-  BellIcon,
-  CreditCardIcon,
   LogOutIcon,
-} from "lucide-react"
+} from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
+  const session = useSession();
 
   return (
     <div className="h-screen flex bg-gray-200 overflow-hidden">
@@ -44,15 +44,15 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <Topbar toggle={() => setOpen(true)} />
 
         {/* Header */}
-        <div className="hidden bg-white px-4 py-4 border-b md:flex justify-between items-center">
+        <div className="hidden bg-white px-4 py-4 border-b md:flex justify-between items-center border">
           <div>
             <h3 className="text-[16px] font-semibold">Good Afternoon Asif</h3>
             <p className="text-[14px]">13 June, 2026</p>
           </div>
 
-          <div className="flex gap-4 items-center">
-            <Bell />
-            <h3>|</h3>
+          {/* user */}
+          {
+            session.data ? <div className="flex gap-4 items-center">
 
             <div>
               <h3 className="font-semibold">Asif Riaj</h3>
@@ -70,28 +70,24 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <BadgeCheckIcon />
-                    Account
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <CreditCardIcon />
-                    Billing
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <BellIcon />
-                    Notifications
-                  </DropdownMenuItem>
+                  
+
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => signOut()}>
                   <LogOutIcon />
                   Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-          </div>
+          </div> : 
+
+          <Link href="/login"><Button
+          className="rounded-lg bg-green-600 py-2 text-white font-semibold hover:bg-green-700 transition"
+          >log In</Button></Link>
+          }
+
         </div>
 
         {/* Content */}

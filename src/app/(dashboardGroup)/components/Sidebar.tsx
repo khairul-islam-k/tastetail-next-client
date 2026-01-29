@@ -2,21 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
-  LayoutDashboard,
+  Home,
   Users,
-  ChevronDown,
-  DollarSign,
-  FileText,
-  CalendarCheck,
-  Send,
-  Briefcase,
-  Folder,
-  Bell,
-  User,
-  LogOut,
-  Activity
+  Calendar,
+  Plane,
+  CreditCard,
+  Settings,
+  Heart,
+  Ticket,
+  Handshake,
+  LifeBuoy,   // 🆕 For user support
+  Headphones, // 🆕 For admin support management
+  MessageCircle,
+  PlaneIcon,
+
 } from "lucide-react";
 
 interface TSidebarProps {
@@ -24,88 +24,108 @@ interface TSidebarProps {
 }
 
 export default function Sidebar({ close } : TSidebarProps) {
-  const [openOrders, setOpenOrders] = useState(false);
 
-  const menu = [
-    {
-      name: "Dashboard",
-      href: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      name: "Employee",
-      icon: Users,
-      children: [
-        { name: "Employee Database", href: "/employ" },
-        { name: "Add New Employee", href: "/addEmployee" },
-        { name: "Performance Report", href: "/performanceReport" },
-        { name: "Performance History", href: "/performanceHistory" },
-      ],
-    },
-    {
-      name: "Payroll",
-      href: "/dashboard/payroll",
-      icon: DollarSign,
-    },
-    {
-      name: "Pay Slip",
-      href: "/dashboard/pay-slip",
-      icon: FileText,
-    },
-    {
-      name: "Attendance",
-      href: "/dashboard/attendance",
-      icon: CalendarCheck,
-    },
-    {
-      name: "Request Center",
-      href: "/dashboard/request-center",
-      icon: Send,
-    },
-    {
-      name: "Career Database",
-      href: "/dashboard/career-database",
-      icon: Briefcase,
-    },
-    {
-      name: "Document Manager",
-      href: "/dashboard/document-manager",
-      icon: Folder,
-    },
-    {
-      name: "Notice Board",
-      href: "/",
-      icon: Bell,
-    },
-    {
-      name: "Activity Log",
-      href: "/dashboard/activity-log",
-      icon: Activity,
-    },
-    {
-      name: "Exit Interview",
-      href: "/dashboard/exit-interview",
-      icon: LogOut,
-    },
-    {
-      name: "Profile",
-      href: "/dashboard/profile",
-      icon: User,
-    }
-  ];
+  const menuItems = [
+  // Admin & Moderator
+  {
+    name: "Dashboard",
+    icon: Home,
+    href: "/dashboard/admin",
+    roles: ["admin", "moderator"],
+  },
+  {
+    name: "All Tours",
+    icon: PlaneIcon,
+    href: "/dashboard/admin/all",
+    roles: ["admin", "moderator"],
+  },
+  {
+    name: "Bookings",
+    icon: Calendar,
+    href: "/dashboard/moderator/bookings",
+    roles: ["admin", "moderator"],
+  },
+  {
+    name: "Payments",
+    icon: CreditCard,
+    href: "/dashboard/payments",
+    roles: ["admin", "moderator"],
+  },
+
+  // Admin Only
+  {
+    name: "Add Tour",
+    icon: Plane,
+    href: "/dashboard/admin/add/tours",
+    roles: ["admin"],
+  },
+  {
+    name: "Discounts",
+    icon: Ticket,
+    href: "/dashboard/admin/discounts",
+    roles: ["admin"],
+  },
+  {
+    name: "Users Management",
+    icon: Users,
+    href: "/dashboard/admin/users",
+    roles: ["admin"],
+  },
+  {
+    name: "My Bookings",
+    icon: Calendar,
+    href: "/dashboard/user/bookings",
+    roles: ["admin", "moderator", "user"],
+  },
+  {
+    name: "Profile",
+    icon: Users,
+    href: "/dashboard/user/profile",
+    roles: ["admin", "moderator", "user"],
+  },
+  {
+    name: "Wishlist",
+    icon: Heart,
+    href: "/dashboard/user/wishlist",
+    roles: ["admin", "moderator", "user"],
+  },
+  {
+    name: "Settings",
+    icon: Settings,
+    href: "/dashboard/settings",
+    roles: ["admin", "moderator", "user"],
+  },
+  {
+    name: "Communication",
+    icon: MessageCircle,
+    href: "/dashboard/user/communication",
+    roles: ["admin", "moderator", "user"],
+  },
+
+  // 🆕 Admin Support Management
+  { name: "Support Management", icon: Headphones, href: "/dashboard/admin/support", roles: ["admin", "moderator", "user"] },
+
+  // ✅ User Features
+  { name: "Travel Buddy", icon: Handshake, href: "/dashboard/user/travel-buddy", roles: ["admin", "moderator", "user"] },
+
+  // 🆕 Add Support for all roles
+  { name: "Support", icon: LifeBuoy, href: "/dashboard/support", roles: ["admin", "moderator", "user"] }
+];
+
+const filteredMenu = menuItems.filter((item) =>
+    item.roles.includes("admin")
+  );
 
   return (
     <div className="h-full w-64 bg-white shadow px-4 pb-4 overflow-auto">
       <div className="h-20 flex justify-center items-center">
-        <h3>Khairul islam</h3>
+        <h3 className="text-2xl font-bold">Taste<span className="text-amber-500">Trail</span></h3>
       </div>
 
       <nav className="space-y-2">
-        {menu.map((item) => {
+        {filteredMenu.map((item) => {
           const Icon = item.icon;
 
-          // Normal Link
-          if (!item.children) {
             return (
               <Link
                 key={item.name}
@@ -119,41 +139,8 @@ export default function Sidebar({ close } : TSidebarProps) {
             );
           }
 
-          // Nested Menu (Orders)
-          return (
-            <div key={item.name}>
-              <button
-                onClick={() => setOpenOrders(!openOrders)}
-                className="w-full flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition"
-              >
-                <Icon size={20} />
-                <span className="flex-1 text-left font-medium">
-                  {item.name}
-                </span>
-                <ChevronDown
-                  size={18}
-                  className={`transition ${openOrders ? "rotate-180" : ""
-                    }`}
-                />
-              </button>
 
-              {openOrders && (
-                <div className="ml-9 mt-1 space-y-1">
-                  {item.children.map((child) => (
-                    <Link
-                      key={child.name}
-                      href={child.href}
-                      onClick={close}
-                      className="block p-2 rounded-md font-medium text-gray-600 hover:bg-gray-100 hover:text-blue-600"
-                    >
-                      {child.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
+        )}
       </nav>
     </div>
   );
