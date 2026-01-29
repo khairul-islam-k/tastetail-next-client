@@ -8,7 +8,8 @@ const AddCategory = () => {
 
     const handleCategory = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const category = e.currentTarget.category.value;
+        const form = e.currentTarget;
+        const category = form.category.value;
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category`, {
             method: 'POST',
@@ -22,6 +23,7 @@ const AddCategory = () => {
         const data = await res.json();
         console.log(data);
         if (data?.insertedId) {
+            form.reset();
             Swal.fire({
                 position: "top-end",
                 icon: "success",

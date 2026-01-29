@@ -3,8 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
+  ClipboardList,
   FolderCog,
   FolderPlus,
+  Users,
+  UtensilsCrossed,
 
 } from "lucide-react";
 
@@ -15,7 +18,26 @@ interface TSidebarProps {
 export default function Sidebar({ close }: TSidebarProps) {
 
   const menuItems = [
-    // Admin & Moderator
+    // Admin & 
+    {
+      name: "Manage Users",
+      icon: Users, // import Users icon from lucide-react
+      href: "/dashboard/admin/manageUsers",
+      roles: ["admin", "moderator"],
+    },
+
+    {
+      name: "Create Recipe",
+      icon: UtensilsCrossed,
+      href: "/dashboard/moderator/createRecipe",
+      roles: ["admin", "moderator"],
+    },
+    {
+      name: "Manage Recipes",
+      icon: ClipboardList,
+      href: "/dashboard/moderator/manageRecipes",
+      roles: ["admin", "moderator"],
+    },
     {
       name: "Add New Category",
       icon: FolderPlus,
