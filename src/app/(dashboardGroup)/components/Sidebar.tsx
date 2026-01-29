@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
+  BookOpen,
   ClipboardList,
   FolderCog,
   FolderPlus,
+  MessageSquare,
   Users,
   UtensilsCrossed,
 
@@ -23,9 +25,10 @@ export default function Sidebar({ close }: TSidebarProps) {
       name: "Manage Users",
       icon: Users, // import Users icon from lucide-react
       href: "/dashboard/admin/manageUsers",
-      roles: ["admin", "moderator"],
+      roles: ["admin"],
     },
 
+    // admin and moderator
     {
       name: "Create Recipe",
       icon: UtensilsCrossed,
@@ -47,8 +50,23 @@ export default function Sidebar({ close }: TSidebarProps) {
     {
       name: "Manage Category",
       icon: FolderCog,
-      href: "/dashboard/moderator/manageCategory",
+      href: "/dashboard/moderator/manageReviews",
       roles: ["admin", "moderator"],
+    },
+    {
+      name: "Manage Reviews",
+      icon: MessageSquare,
+      href: "/dashboard/moderator/manageReviews",
+      roles: ["admin", "moderator"],
+    },
+
+
+    // users
+    {
+      name: "Manage Recipes",
+      icon: BookOpen,
+      href: "/dashboard/user/recipes",
+      roles: ["user"],
     },
   ];
 
