@@ -12,12 +12,15 @@ import {
   UtensilsCrossed,
 
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 interface TSidebarProps {
   close?: () => void;
 }
 
 export default function Sidebar({ close }: TSidebarProps) {
+  const session = useSession();
+  console.log(session.data?.user?.role)
 
   const menuItems = [
     // Admin & 
@@ -50,7 +53,7 @@ export default function Sidebar({ close }: TSidebarProps) {
     {
       name: "Manage Category",
       icon: FolderCog,
-      href: "/dashboard/moderator/manageReviews",
+      href: "/dashboard/moderator/manageCategory",
       roles: ["admin", "moderator"],
     },
     {
@@ -70,8 +73,10 @@ export default function Sidebar({ close }: TSidebarProps) {
     },
   ];
 
+  const role = session?.data?.user?.role as string;
+
   const filteredMenu = menuItems.filter((item) =>
-    item.roles.includes("admin")
+    item.roles.includes(role)
   );
 
   return (

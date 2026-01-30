@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TUser } from "@/types/user";
 import Swal from "sweetalert2";
 
 // types/user.ts

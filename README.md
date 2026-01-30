@@ -1,36 +1,177 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍽️ TasteTrail – Personalized Recipe Recommendation & Smart Meal Planner
 
-## Getting Started
+TasteTrail is a full-stack web application designed to help users discover recipes, plan meals efficiently, track cooking activities, and receive personalized food recommendations.  
+The system focuses on improving everyday cooking decisions using data-driven insights and smart automation.
 
-First, run the development server:
+---
+
+## 🔐 Admin Credentials
+- **Admin Email:** khairul@gmail.com 
+- **Admin Password:** 123456 
+
+---
+
+## 🔐 user Credentials
+- **user Email:** sristy@gmail.com 
+- **user Password:** 123456 
+
+---
+
+## 🚀 Project Overview
+
+TasteTrail provides an interactive platform where users can:
+
+- Discover and search recipes
+- Plan weekly meals
+- Track cooking progress
+- Submit reviews and ratings
+- Receive personalized food suggestions
+
+Admins manage platform content including recipes, categories, users, and reviews.
+
+---
+
+## 🎯 Project Objectives
+
+- Develop a secure authentication-based web application  
+- Implement recipe discovery and management functionality  
+- Create a personalized recommendation system  
+- Enable meal planning and cooking tracking  
+- Design a responsive and user-friendly interface  
+- Apply real-world full-stack development practices  
+
+---
+
+## 🏗️ System Architecture
+
+### Technology Stack
+
+| Layer        | Technology |
+|-------------|------------|
+| Frontend    | Next.js & Typescript |
+| Backend     | Node.js, Express.js |
+| Database    | MongoDB |
+| Authentication | JWT / Session |
+| Hosting     | Vercel (Frontend), Cloud Hosting (Backend) |
+| Charts      | Chart.js / Recharts |
+
+---
+
+## 👥 User Roles & Permissions
+
+### 🔑 Admin Role
+
+Admins manage platform content.
+
+**Core Responsibilities**
+
+- Recipe management (Create, Read, Update, Delete)
+- Category and cuisine management
+- Review moderation
+- User role management
+- Featured recipe control
+
+---
+
+### 👤 Normal User Role
+
+Users interact with the system for cooking and planning.
+
+**Core Capabilities**
+
+- Browse and search recipes
+- Save recipes to personal cookbook
+- Weekly meal planning
+- Cooking progress tracking
+- Review and rating submission
+
+---
+
+## 🔐 Authentication & Security
+
+### Registration Requirements
+
+Users must register using:
+
+- Full name  
+- Email  
+- Profile photo  
+- Password  
+
+### Security Measures
+
+- Password encryption
+- Input validation
+- Duplicate email prevention
+- Secure token/session handling
+
+---
+
+### Login Process
+
+Users log in using email and password.  
+Successful authentication grants role-based access.
+
+---
+
+## 🛡️ Route Protection & Navigation Logic
+
+### Protected Routes
+
+- All dashboard pages require authentication
+- Unauthenticated users are redirected to Login
+
+### Default Redirect Rules
+
+| User Role | Redirect Page |
+|----------|---------------|
+| Normal User | User Dashboard |
+| Admin | Admin Dashboard |
+
+---
+
+## 📦 Core Functional Modules
+
+### 7.1 Recipe Management (Admin)
+
+Admins can:
+
+- Create recipes (name, ingredients, instructions, category, cuisine, cooking time, calories, image)
+- Edit recipes
+- Delete recipes with confirmation
+
+---
+
+### 7.2 Category & Cuisine Management (Admin)
+
+- Add new categories
+- Edit existing categories
+- Assign recipes to valid categories
+
+---
+
+### 7.3 Review & Rating System
+
+- Users submit reviews and ratings
+- Reviews remain pending until admin approval
+- Approved reviews become publicly visible
+
+---
+
+### 7.4 Recipe Discovery & Search
+
+Users can:
+
+- Search by recipe name or ingredient
+- Filter by category and cuisine
+- Browse recipes with pagination or infinite scroll
+
+---
+
+## ⚙️ Installation & Setup
+
+### Frontend
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
